@@ -25,7 +25,7 @@
       </el-col>
     </el-row>
     <div style="margin-top: 40px">
-      <el-button @click="login()" style="width: 270px;" type="success" plain>立即登录</el-button>
+      <el-button @click="login()" @keyup.enter="enterDown" style="width: 270px;" type="success" plain>立即登录</el-button>
     </div>
     <el-divider>
       <span style="color: gray;font-size: 14px">没有账号？</span>
@@ -38,10 +38,11 @@
 
 <script setup>
 import {User, Lock} from "@element-plus/icons-vue"
-import {reactive} from "vue";
+import {onMounted, onUnmounted, reactive} from "vue";
 import {ElMessage} from "element-plus";
-import {post} from "../../utils";
+import {get, post} from "../../utils";
 import router from "../../router";
+import {useStore} from "../../stores";
 
 const form = reactive({
   username: '',
@@ -49,6 +50,7 @@ const form = reactive({
   remember: false
 })
 
+const store = useStore()
 const login = () => {
   if(!form.username || !form.password){
     ElMessage.warning("请输入用户名和密码！")
@@ -59,10 +61,26 @@ const login = () => {
       remember: form.remember
     }, (message) => {
       ElMessage.success(message)
-      router.push('/index')
+      get('/api/user/me', (message) => {
+        store.auth.user = message
+        router.push('/index')
+      }, () => {
+        store.auth.user = null
+      })
     })
   }
 }
+onMounted(() => {
+  window.addEventListener("keydown", enterDown);
+});
+const enterDown = (e) => {
+  if (e.keyCode === 13) {
+    login();
+  }
+}
+onUnmounted(() => {
+  window.removeEventListener("keydown", enterDown, false);
+});
 </script>
 
 <style scoped>

@@ -21,3 +21,18 @@ spring:
       database: 0
       host: localhost
       port: 6379
+
+  rabbitmq:
+    host: 127.0.0.1
+    username: guest
+    password: guest
+    port: 5672
+    listener:
+      simple:
+        prefetch: 1
+        acknowledge-mode: none
+
+mybatis:
+  type-aliases-package: com.example.entity
+  mapper-locations: classpath:/mapper/*.xml
+

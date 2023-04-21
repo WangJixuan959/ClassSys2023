@@ -134,12 +134,15 @@ const register = () => {
 
 // 发送邮箱验证码
 const validateEmail = () => {
+  coldTime.value = 60
   post("/api/auth/valid-register-email", {
     email: form.email
   }, (message) => {
     ElMessage.success(message)
-    coldTime.value = 60
     setInterval(() => coldTime.value--, 1000)
+  }, (message) => {
+    ElMessage.warning(message)
+    coldTime.value = 0
   })
 }
 
