@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CourseVideoMapper">
+    <insert id="newCourseVideo" parameterType="com.example.entity.CourseVideoInfo">
+        insert into
+        course_video_info (course_name, teacher_name, classroom_id, date1, date2, video_path, status, `desc`)
+        values (#{course_name}, #{teacher_name}, #{classroom_id},#{date1},#{date2},#{video_path},#{status},#{desc})
+    </insert>
+
+    <select id="selectAll" resultType="com.example.entity.CourseVideoInfo">
+        select * from course_video_info
+    </select>
+</mapper>
