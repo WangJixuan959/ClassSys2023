@@ -12,6 +12,7 @@ import ElementPlus from 'element-plus';                             //引入elem
 axios.defaults.baseURL = "http://127.0.0.1:8080"
 axios.defaults.withCredentials = true
 
+
 const app = createApp(App).use(ElementPlus,{locale})
 
 app.use(createPinia())
